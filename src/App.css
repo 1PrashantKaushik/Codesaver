@@ -30,3 +30,212 @@
     transform: rotate(360deg);
   }
 }
+
+.left{
+  height:100vh;
+  padding:0px;
+  -webkit-box-shadow: -1px 1px 13px 0px rgba(0,0,0,0.36);
+  -moz-box-shadow: -1px 1px 13px 0px rgba(0,0,0,0.36);
+  box-shadow: -1px 1px 13px 0px rgba(0,0,0,0.36);
+}
+
+.middle{
+  height:100vh;
+  padding:0px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.36);
+
+}
+
+.right{
+  height:100vh;
+  padding:0px;
+}
+
+.top-header{
+  background-color: rgb(99, 99, 247);
+  height:4%
+  
+}
+
+.top-header:hover{
+  background-color: rgb(99, 99, 247);
+  -webkit-box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+-moz-box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+}
+
+.top-header p{
+  color:white;
+  margin-top:1%;
+  font-size :19px !important;
+}
+.page-loader{ background: #f9f9f9 none repeat scroll 0 0;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9998;}
+.loader {
+  height: 8px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  width: 44px;
+}
+.dot {
+  background: #ccc none repeat scroll 0 0;
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  position: absolute;
+  width: 10px;
+}
+.dot_1 {
+  animation: 1.5s linear 0s normal none infinite running animateDot1;
+  background: #f26f29 none repeat scroll 0 0;
+  left: 12px;   
+}.dot_2 {
+  animation: 1.5s linear 0.5s normal none infinite running animateDot2;
+  left: 24px;
+}.dot_3 {
+  animation: 1.5s linear 0s normal none infinite running animateDot3;
+  left: 12px;
+}.dot_4 {
+  animation: 1.5s linear 0.5s normal none infinite running animateDot4;
+  left: 24px;
+}
+@keyframes animateDot1 {
+0% {
+  transform: rotate(0deg) translateX(-12px);
+}
+25% {
+  transform: rotate(180deg) translateX(-12px);
+}
+75% {
+  transform: rotate(180deg) translateX(-12px);
+}
+100% {
+  transform: rotate(360deg) translateX(-12px);
+}
+}
+@keyframes animateDot2 {
+0% {
+  transform: rotate(0deg) translateX(-12px);
+}
+25% {
+  transform: rotate(-180deg) translateX(-12px);
+}
+75% {
+  transform: rotate(-180deg) translateX(-12px);
+}
+100% {
+  transform: rotate(-360deg) translateX(-12px);
+}
+}
+@keyframes animateDot3 {
+0% {
+  transform: rotate(0deg) translateX(12px);
+}
+25% {
+  transform: rotate(180deg) translateX(12px);
+}
+75% {
+  transform: rotate(180deg) translateX(12px);
+}
+100% {
+  transform: rotate(360deg) translateX(12px);
+}
+}
+@keyframes animateDot4 {
+0% {
+  transform: rotate(0deg) translateX(12px);
+}
+25% {
+  transform: rotate(-180deg) translateX(12px);
+}
+75% {
+  transform: rotate(-180deg) translateX(12px);
+}
+100% {
+  transform: rotate(-360deg) translateX(12px);
+}
+}
+
+ .snackbar{
+   margin-left:1px;
+ animation-name: snacku;
+ animation-duration: 1.3s;
+}
+
+@keyframes snacku{
+  from{margin-left:100%}
+  to{margin-left:0px}
+}
+
+
+
+/* User Image */
+html,body{
+  height: 100%;
+}
+   .container{
+     height: 100%;
+     align-content: center;
+   }
+
+   .image_outer_container{
+     margin-top: auto;
+     margin-bottom: auto;
+     border-radius: 50%;
+     position: relative;
+   }
+
+   .image_inner_container{
+     border-radius: 50%;
+     padding: 5px;
+   }
+   .image_inner_container img{
+     height: 150px;
+     width: 150px;
+     border-radius: 50%;
+     border: 5px solid white;
+   }
+
+   .image_outer_container .green_icon{
+     background-color: #4cd137;
+     position: absolute;
+     right: 70px;
+     bottom: 10px;
+     height: 30px;
+     width: 30px;
+     border:5px solid white;
+     border-radius: 50%;
+   }
+
+
+.top-header{
+  background-color: rgb(99, 99, 247);
+  height:4%
+  
+}
+
+.top-header:hover{
+  background-color: rgb(99, 99, 247);
+  -webkit-box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+-moz-box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
+}
+
+.showdata{
+  height:95.6vh;
+  width:100%;
+  border:none;
+}
+
+.showdata:hover{
+  -webkit-box-shadow: -2px 0px 11px 0px rgba(0,0,0,0.45);
+-moz-box-shadow: -2px 0px 11px 0px rgba(0,0,0,0.45);
+box-shadow: -2px 0px 11px 0px rgba(0,0,0,0.45);
+}
