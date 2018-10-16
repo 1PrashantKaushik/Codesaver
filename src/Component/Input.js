@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Col } from "react-bootstrap";
 
-class Input extends Component {
+export class Input extends Component {
   render() {
     return (
       <Col xs={12} sm={12} md={12} lg={12} style={{ padding: "0px" }}>
@@ -20,7 +20,7 @@ class Input extends Component {
             bsStyle="primary"
             style={{
               backgroundColor: "rgb(99, 99, 247)",
-              width: "28%"
+              width: "26%"
             }}
             onClick={this.props.modalShow}
           >
@@ -31,5 +31,3 @@ class Input extends Component {
     );
   }
 }
-
-export default Input;

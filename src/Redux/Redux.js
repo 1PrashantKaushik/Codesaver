@@ -20,6 +20,12 @@ const reducer = (state = initialstate, action) => {
       console.log("Maininfo are", Maininfo);
       return { ...state, Maininfo };
     }
+    case "Edit_Data": {
+      console.log("===...,,>>", action.payload);
+      let { Maininfo } = state;
+      Maininfo[action.payload.index].information = action.payload.information;
+      return { ...state, Maininfo };
+    }
     default: {
       return state;
     }

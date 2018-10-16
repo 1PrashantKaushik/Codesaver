@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-class Showingmodal extends Component {
+export class Showingmodal extends Component {
   state = {
     textareadata: ""
   };
@@ -16,14 +16,14 @@ class Showingmodal extends Component {
       <React.Fragment>
         <Modal show onHide={this.props.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Your Code </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <textarea
               rows="36"
               cols="68"
               name="textareadata"
-              defaultValue="Write Your Code Here"
+              defaultValue={this.props.data}
               onChange={this.handleChange}
             />
           </Modal.Body>
@@ -41,5 +41,3 @@ class Showingmodal extends Component {
     );
   }
 }
-
-export default Showingmodal;

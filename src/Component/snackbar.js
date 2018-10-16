@@ -12,7 +12,7 @@ const styles = theme => ({
   }
 });
 
-class SimpleSnackbar extends React.Component {
+class SimpleSnackbar1 extends React.Component {
   handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -39,9 +39,7 @@ class SimpleSnackbar extends React.Component {
             </span>
           }
           action={[
-            <Button key="undo" color="secondary" onClick={this.handleClose}>
-              <span style={{ fontSize: "14px" }}>Undo</span>
-            </Button>,
+            <Button key="undo" color="secondary" onClick={this.handleClose} />,
             <IconButton
               key="close"
               aria-label="Close"
@@ -59,8 +57,8 @@ class SimpleSnackbar extends React.Component {
   }
 }
 
-SimpleSnackbar.propTypes = {
+SimpleSnackbar1.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleSnackbar);
+export const SimpleSnackbar = withStyles(styles)(SimpleSnackbar1);
