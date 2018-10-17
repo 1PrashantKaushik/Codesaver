@@ -29,9 +29,9 @@ class SimpleSnackbar1 extends React.Component {
           open={this.props.snackbar}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left"
+            horizontal: "right"
           }}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           onClose={this.props.closeSnackbar}
           message={
             <span id="message-id" style={{ fontSize: "16px" }}>

@@ -169,10 +169,10 @@ box-shadow: -1px -1px 24px 1px rgba(0,0,0,0.36);
  animation-duration: 1.3s;
 }
 
-@keyframes snacku{
+/* @keyframes snacku{
   from{margin-left:100%}
   to{margin-left:0px}
-}
+} */
 
 
 
@@ -268,3 +268,23 @@ box-shadow: -0.4px 0px 0px 0px rgba(0,0,0,0.45);
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(99, 99, 247); 
 }
+
+
+.ace_editor.ace-tm.showdata {
+  width: 99% !important;
+  height: 81.8vh !important;
+}
+.ace-tm .ace_print-margin {
+  background: transparent !important;
+}
+
+.para{
+  margin-top:50%;
+  margin-left:35%
+}
+
+.para p{
+   font-size: 22px;
+   color:rgb(99, 99, 247)
+}
+

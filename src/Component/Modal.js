@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
+import AceEditor from "react-ace";
 
 export class Showingmodal extends Component {
   state = {
     textareadata: ""
   };
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = e => {
+    console.log("Its runnig ", e);
+    this.setState({ textareadata: e });
   };
 
   render() {
@@ -19,13 +21,32 @@ export class Showingmodal extends Component {
             <Modal.Title>Your Code </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <textarea
+            <AceEditor
+              mode="javascript"
+              theme="monokai"
+              name="blah2"
+              onLoad={this.onLoad}
+              onChange={this.onChange}
+              fontSize={14}
+              showPrintMargin={true}
+              showGutter={true}
+              highlightActiveLine={true}
+              value={`${textareadata}`}
+              setOptions={{
+                enableBasicAutocompletion: false,
+                enableLiveAutocompletion: false,
+                enableSnippets: false,
+                showLineNumbers: true,
+                tabSize: 2
+              }}
+            />
+            {/* <textarea
               rows="36"
               cols="68"
               name="textareadata"
               defaultValue={this.props.data}
               onChange={this.handleChange}
-            />
+            /> */}
           </Modal.Body>
           <Modal.Footer>
             <Button

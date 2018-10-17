@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { addtodb } from "../utils";
 
 let initialstate = {
   Maininfo: []
@@ -9,6 +10,7 @@ const reducer = (state = initialstate, action) => {
     case "Add_Data": {
       let { Maininfo } = state;
       Maininfo = [...Maininfo, action.payload];
+      addtodb(action.payload);
       return { ...state, Maininfo };
     }
     case "Remove_Data": {
@@ -17,7 +19,6 @@ const reducer = (state = initialstate, action) => {
         ...Maininfo.slice(0, action.payload),
         ...Maininfo.slice(action.payload + 1, Maininfo.length)
       ];
-      console.log("Maininfo are", Maininfo);
       return { ...state, Maininfo };
     }
     case "Edit_Data": {
@@ -25,6 +26,13 @@ const reducer = (state = initialstate, action) => {
       let { Maininfo } = state;
       Maininfo[action.payload.index].information = action.payload.information;
       return { ...state, Maininfo };
+    }
+    case "Gether_Data": {
+      console.log("Action.payload are:", action.payload.data[0].mycodes);
+      let newdata = action.payload.data[0].mycodes;
+      let { Maininfo } = state;
+      Maininfo = [...Maininfo, ...newdata];
+      return { state, Maininfo };
     }
     default: {
       return state;

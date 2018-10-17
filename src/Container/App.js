@@ -17,7 +17,36 @@ class App extends Component {
     Topic: "",
     snackbardata: "",
     showingdata: "",
-    indexinarray: null
+    indexinarray: null,
+    inputdefinition: ""
+  };
+
+  componentWillMount = () => {
+    let options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    };
+    console.log("options", options);
+    new Promise((resolve, reject) => {
+      return fetch("http://localhost:8081/retrievedata", options)
+        .then(res => {
+          console.log("response==>", res);
+          return res.json();
+        })
+        .then(data => {
+          console.log("data return in then react---->", data);
+          store.dispatch({ type: "Gether_Data", payload: data });
+          return data;
+        })
+        .catch(err => {
+          console.log("error in fetch call===>", err);
+        });
+    }).catch(err => {
+      console.log("Errors from promise in app.js", err);
+    });
   };
 
   infoShowing = index => {
@@ -39,12 +68,38 @@ class App extends Component {
     this.setState({ modal: false });
   };
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = value => {
+    this.setState({ Topic: value });
   };
 
   removeData = index => {
-    store.dispatch({ type: "Remove_Data", payload: index });
+    import("material-ui/styles");
+    let options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ index: index })
+    };
+    console.log("options", options);
+    new Promise((resolve, reject) => {
+      return fetch("http://localhost:8081/deletelistitem", options)
+        .then(res => {
+          console.log("response==>", res);
+          return res.json();
+        })
+        .then(data => {
+          console.log("data return in then react---->", data);
+          store.dispatch({ type: "Remove_Data", payload: index });
+          return data;
+        })
+        .catch(err => {
+          console.log("error in fetch call===>", err);
+        });
+    }).catch(err => {
+      console.log("Errors from promise in app.js", err);
+    });
   };
 
   loadingFunction = () => {
@@ -149,12 +204,17 @@ class App extends Component {
               </div>
             </div>
             {loading ? (
-              <div className="loader">
-                <span className="dot dot_1" />
-                <span className="dot dot_2" />
-                <span className="dot dot_3" />
-                <span className="dot dot_4" />
-              </div>
+              <React.Fragment>
+                <div className="loader">
+                  <span className="dot dot_1" />
+                  <span className="dot dot_2" />
+                  <span className="dot dot_3" />
+                  <span className="dot dot_4" />
+                </div>
+                <div className="para">
+                  <p> Please Click On Any List Item</p>
+                </div>
+              </React.Fragment>
             ) : (
               <Maintextarea
                 data={this.state.showingdata}
