@@ -6,6 +6,7 @@ import {
   SimpleSnackbar,
   Maintextarea
 } from "../Component/index";
+import pimage from "../images/1536301658152.JPEG";
 import store from "../Redux/Redux";
 import { connect } from "react-redux";
 
@@ -82,11 +83,12 @@ class App extends Component {
       },
       body: JSON.stringify({ index: index })
     };
-    console.log("options", options);
+
     new Promise((resolve, reject) => {
       return fetch("http://localhost:8081/deletelistitem", options)
         .then(res => {
           console.log("response==>", res);
+          this.setState({ indexinarray: index + 1 });
           return res.json();
         })
         .then(data => {
@@ -196,7 +198,7 @@ class App extends Component {
                 <div className="green_icon" />
                 <div className="image_inner_container">
                   <img
-                    src="https://i0.wp.com/tricksmaze.com/wp-content/uploads/2017/04/Stylish-Girls-Profile-Pictures-36.jpg?resize=300%2C300&ssl=1"
+                    src={`${pimage}`}
                     alt=""
                     style={{ marginTop: "-33px" }}
                   />

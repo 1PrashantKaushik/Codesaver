@@ -9,11 +9,15 @@ export class Maintextarea1 extends Component {
   state = {
     modal: false,
     snackbar: false,
-    textarea: ""
+    textarea: "",
+    write: false
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.index != nextProps.index) {
+    if (
+      this.props.index != nextProps.index &&
+      this.props.info[nextProps.index]
+    ) {
       this.setState({
         textarea: this.props.info[nextProps.index].information
       });
@@ -35,7 +39,7 @@ export class Maintextarea1 extends Component {
   };
 
   onChange = e => {
-    this.setState({ textarea: e });
+    this.setState({ textarea: e, write: true });
   };
 
   closeSnackbar = () => {
@@ -48,7 +52,7 @@ export class Maintextarea1 extends Component {
       information: this.state.textarea
     };
     store.dispatch({ type: "Edit_Data", payload: data });
-    this.setState({ snackbar: true, textarea: "" });
+    this.setState({ snackbar: true });
     let options = {
       method: "POST",
       headers: {
@@ -74,7 +78,7 @@ export class Maintextarea1 extends Component {
   };
 
   render() {
-    let { snackbar, textarea } = this.state;
+    let { snackbar, textarea, write } = this.state;
     let { index, info } = this.props;
 
     return (
@@ -88,7 +92,7 @@ export class Maintextarea1 extends Component {
             >
               Save
             </Button>
-            {textarea ? (
+            {textarea || write ? (
               <AceEditor
                 className="showdata"
                 mode="javascript"
