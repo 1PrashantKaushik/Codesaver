@@ -6,10 +6,19 @@ import App from "./Container/App";
 import * as serviceWorker from "./serviceWorker";
 import store from "./Redux/Redux";
 import { Provider } from "react-redux";
+import { Register } from "./Container/index";
+import Routes from "./routes";
+
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <App />
+//   </Provider>,
+//   document.getElementById("root")
+// );
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Routes />
   </Provider>,
   document.getElementById("root")
 );

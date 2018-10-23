@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 
-// const userSchema = mongoose.Schema({
-//   name: { type: String },
-//   mycodes: { type: Array }
-// });
-
 const registerSchema = mongoose.Schema({
   name: { type: String },
   password: { type: String },
@@ -13,5 +8,5 @@ const registerSchema = mongoose.Schema({
   mycodes: { type: Array }
 });
 
-// module.exports = mongoose.model("users", userSchema);
-module.exports = mongoose.model("users", registerSchema);
+module.exports = mongoose.model("register
+eduser", registerSchema);

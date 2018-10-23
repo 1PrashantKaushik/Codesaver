@@ -61,7 +61,8 @@ export class Maintextarea1 extends Component {
       },
       body: JSON.stringify({
         index: this.props.index,
-        data: this.state.textarea
+        data: this.state.textarea,
+        email: localStorage.getItem("Userlogged")
       })
     };
     fetch("http://localhost:8081/editlistitem", options)
@@ -88,7 +89,11 @@ export class Maintextarea1 extends Component {
             <Button
               className="edit-button"
               onClick={this.saveAllData}
-              style={{ marginLeft: "20px" }}
+              style={{
+                marginLeft: "43px",
+                marginTop: "0px",
+                marginBottom: "7px"
+              }}
             >
               Save
             </Button>

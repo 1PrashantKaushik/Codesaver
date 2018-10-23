@@ -31,8 +31,14 @@ const reducer = (state = initialstate, action) => {
       console.log("Action.payload are:", action.payload.data[0].mycodes);
       let newdata = action.payload.data[0].mycodes;
       let { Maininfo } = state;
+      Maininfo.length = 0;
       Maininfo = [...Maininfo, ...newdata];
       return { state, Maininfo };
+    }
+    case "CLEAR": {
+      let { Maininfo } = state;
+      Maininfo = [...Maininfo, action.payload];
+      return { ...state, Maininfo };
     }
     default: {
       return state;

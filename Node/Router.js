@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/userdata", async (req, res) => {
   try {
+    console.log("..>>>", req.body);
     await api.save(req.body);
     res.send({ status: 200 });
   } catch (err) {
@@ -14,9 +15,10 @@ app.post("/userdata", async (req, res) => {
   }
 });
 
-app.get("/retrievedata", async (req, res) => {
+app.post("/retrievedata", async (req, res) => {
   try {
-    let alldatafromdb = await api.getherAllData();
+    console.log("It's Running===>>");
+    let alldatafromdb = await api.getherAllData(req.body);
     res.send({ data: alldatafromdb });
   } catch (err) {
     res.send({ error: "Data not found" });
@@ -25,7 +27,8 @@ app.get("/retrievedata", async (req, res) => {
 
 app.post("/deletelistitem", async (req, res) => {
   try {
-    await api.delete({ index: req.body.index });
+    console.log("....<<<<<<", req.body);
+    await api.delete(req.body);
     res.send({ status: 200 });
   } catch (err) {
     res.send({ status: err });

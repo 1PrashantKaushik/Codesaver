@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import store from "../Redux/Redux";
+import { connect } from "react-redux";
 import { Grid, Col, Row, ListGroup, ListGroupItem } from "react-bootstrap";
 import {
   Input,
@@ -7,8 +9,7 @@ import {
   Maintextarea
 } from "../Component/index";
 import pimage from "../images/1536301658152.JPEG";
-import store from "../Redux/Redux";
-import { connect } from "react-redux";
+import logout from "../images/icons8-logout-rounded-down-50.png";
 
 class App extends Component {
   state = {
@@ -19,18 +20,23 @@ class App extends Component {
     snackbardata: "",
     showingdata: "",
     indexinarray: null,
-    inputdefinition: ""
+    inputdefinition: "",
+    logout: false
   };
 
   componentWillMount = () => {
+    if (localStorage.getItem("Userlogged") === null) {
+      this.props.history.push("/");
+    }
+    let email = localStorage.getItem("Userlogged");
     let options = {
-      method: "GET",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      }
+      },
+      body: JSON.stringify({ email: email })
     };
-    console.log("options", options);
     new Promise((resolve, reject) => {
       return fetch("http://localhost:8081/retrievedata", options)
         .then(res => {
@@ -73,15 +79,28 @@ class App extends Component {
     this.setState({ Topic: value });
   };
 
+  logout = () => {
+    new Promise((resolve, reject) => {
+      resolve(localStorage.removeItem("Userlogged"));
+    }).then(res => {
+      // store.dispatch({ type: "CLEAR", payload: {} });
+      this.props.history.push("/");
+    });
+  };
+
   removeData = index => {
-    import("material-ui/styles");
+    // import("material-ui/styles");
+    let removedata = {
+      index: index,
+      email: localStorage.getItem("Userlogged")
+    };
     let options = {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ index: index })
+      body: JSON.stringify(removedata)
     };
 
     new Promise((resolve, reject) => {
@@ -189,13 +208,23 @@ class App extends Component {
             </Col>
           </Col>
           <Col className="right" xs={9} sm={9} md={9} lg={9}>
-            <Col className="top-header" xs={12} sm={12} md={12} lg={12} />
+            <Col className="top-header" xs={12} sm={12} md={12} lg={12}>
+              <h4 style={{ color: "white", display: "inline-block" }}>
+                {localStorage.getItem("Userlogged")}
+              </h4>
+              <img
+                src="https://png.icons8.com/metro/30/ffffff/exit.png"
+                alt="Logout"
+                onClick={this.logout}
+                className="logout-button"
+              />
+            </Col>
             <div
               className="d-flex justify-content-center h-100"
-              style={{ float: "right" }}
+              style={{ marginLeft: "81%" }}
             >
               <div className="image_outer_container">
-                <div className="green_icon" />
+                <div className="green_icon"> </div>
                 <div className="image_inner_container">
                   <img
                     src={`${pimage}`}
@@ -224,6 +253,7 @@ class App extends Component {
                 loadingFunction={this.loadingFunction}
               />
             )}
+            {/* <Button className="logout-button">Primary</Button> */}
           </Col>
           {this.state.modal ? (
             <Showingmodal
