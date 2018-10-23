@@ -7,7 +7,9 @@ const Signuprouter = require("./signuprouter");
 const Loginrouter = require("./loginrouter");
 
 app.use(cors());
-mongoose.connect("mongodb://localhost:27017/database");
+mongoose.connect(
+  "mongodb://database:database12@ds231529.mlab.com:31529/database12"
+);
 
 app.use("/", Router);
 app.use("/", Signuprouter);

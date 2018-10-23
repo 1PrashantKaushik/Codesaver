@@ -182,7 +182,7 @@ export class Register extends Component {
               </div>
               <div className="col-xs-6">
                 <img src={`${code}`} alt="code" className="loginimage" />
-                <img src={`${code1}`} alt="code" className="" />
+                {/* <img src={`${code1}`} alt="code" className="" /> */}
               </div>
             </div>
           </div>
