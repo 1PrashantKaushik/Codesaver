@@ -9,7 +9,8 @@ import {
   Maintextarea
 } from "../Component/index";
 import pimage from "../images/1536301658152.JPEG";
-import logout from "../images/icons8-logout-rounded-down-50.png";
+import { authentication } from "../firebase";
+import firebase, { auth } from "firebase";
 
 class App extends Component {
   state = {
@@ -27,38 +28,21 @@ class App extends Component {
   componentWillMount = () => {
     if (localStorage.getItem("Userlogged") === null) {
       this.props.history.push("/");
+    } else {
+      let id = localStorage.getItem("Userlogged").split("@")[0];
+      let firebasedata = {};
+      authentication.retriveDataFromFirebase(id).then(res => {
+        firebasedata = res;
+        console.log(res, "response");
+        store.dispatch({ type: "Gether_Data", payload: res });
+      });
     }
-    let email = localStorage.getItem("Userlogged");
-    let options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email: email })
-    };
-    new Promise((resolve, reject) => {
-      return fetch("http://localhost:8081/retrievedata", options)
-        .then(res => {
-          console.log("response==>", res);
-          return res.json();
-        })
-        .then(data => {
-          console.log("data return in then react---->", data);
-          store.dispatch({ type: "Gether_Data", payload: data });
-          return data;
-        })
-        .catch(err => {
-          console.log("error in fetch call===>", err);
-        });
-    }).catch(err => {
-      console.log("Errors from promise in app.js", err);
-    });
   };
 
   infoShowing = index => {
     let array = this.props.listanddata;
-    let data = array[index].information;
+    console.log("-----", index, array);
+    let data = array[index].Information;
     this.setState({ showingdata: data, loading: false, indexinarray: index });
   };
 
@@ -81,46 +65,19 @@ class App extends Component {
 
   logout = () => {
     new Promise((resolve, reject) => {
+      authentication.doSignOut();
       resolve(localStorage.removeItem("Userlogged"));
     }).then(res => {
-      // store.dispatch({ type: "CLEAR", payload: {} });
+      store.dispatch({ type: "CLEAR", payload: {} });
       this.props.history.push("/");
     });
   };
 
   removeData = index => {
-    // import("material-ui/styles");
-    let removedata = {
-      index: index,
-      email: localStorage.getItem("Userlogged")
-    };
-    let options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(removedata)
-    };
-
-    new Promise((resolve, reject) => {
-      return fetch("http://localhost:8081/deletelistitem", options)
-        .then(res => {
-          console.log("response==>", res);
-          this.setState({ indexinarray: index + 1 });
-          return res.json();
-        })
-        .then(data => {
-          console.log("data return in then react---->", data);
-          store.dispatch({ type: "Remove_Data", payload: index });
-          return data;
-        })
-        .catch(err => {
-          console.log("error in fetch call===>", err);
-        });
-    }).catch(err => {
-      console.log("Errors from promise in app.js", err);
-    });
+    let id = localStorage.getItem("Userlogged").split("@")[0];
+    authentication.deleteDataFromFirebase(id, index);
+    store.dispatch({ type: "Remove_Data", payload: index });
+    this.setState({ indexinarray: index + 1 });
   };
 
   loadingFunction = () => {
@@ -130,14 +87,16 @@ class App extends Component {
   saveAllData = data => {
     let userdata = {
       Topic: this.state.Topic,
-      information: data
+      Information: data,
+      id: localStorage.getItem("Userlogged").split("@")[0]
     };
     this.setState({ modal: false });
     if (this.state.Topic.trim().length) {
       store.dispatch({ type: "Add_Data", payload: userdata });
       this.setState({
         snackbar: true,
-        snackbardata: "Your Data is saved Succesfully"
+        snackbardata: "Your Data is saved Succesfully",
+        Topic: ""
       });
     }
   };
@@ -145,6 +104,7 @@ class App extends Component {
   render() {
     let { snackbardata, loading, indexinarray } = this.state;
     let { listanddata } = this.props;
+    console.log("List and data are", listanddata);
     return (
       <Grid fluid>
         <Row>
@@ -188,7 +148,7 @@ class App extends Component {
                       {item.Topic}
                       <button
                         type="button"
-                        class="btn btn-default btn-circle btn-lg"
+                        className="btn btn-default btn-circle btn-lg"
                         style={{
                           border: "none",
                           float: "right",

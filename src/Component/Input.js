@@ -40,6 +40,7 @@ export class Input extends Component {
               width: "26%"
             }}
             onClick={this.show}
+            disabled={this.props.submitbutton}
           >
             Add
           </Button>

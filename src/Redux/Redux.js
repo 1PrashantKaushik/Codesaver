@@ -10,6 +10,7 @@ const reducer = (state = initialstate, action) => {
     case "Add_Data": {
       let { Maininfo } = state;
       Maininfo = [...Maininfo, action.payload];
+      console.log("[[[[", Maininfo);
       addtodb(action.payload);
       return { ...state, Maininfo };
     }
@@ -24,12 +25,12 @@ const reducer = (state = initialstate, action) => {
     case "Edit_Data": {
       console.log("===...,,>>", action.payload);
       let { Maininfo } = state;
-      Maininfo[action.payload.index].information = action.payload.information;
+      Maininfo[action.payload.index].Information = action.payload.Information;
       return { ...state, Maininfo };
     }
     case "Gether_Data": {
-      console.log("Action.payload are:", action.payload.data[0].mycodes);
-      let newdata = action.payload.data[0].mycodes;
+      // console.log("Action.payload are:", action.payload);
+      let newdata = action.payload;
       let { Maininfo } = state;
       Maininfo.length = 0;
       Maininfo = [...Maininfo, ...newdata];

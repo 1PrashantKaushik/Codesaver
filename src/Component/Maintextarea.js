@@ -4,6 +4,7 @@ import { SimpleSnackbar } from "../Component";
 import store from "../Redux/Redux";
 import { connect } from "react-redux";
 import AceEditor from "react-ace";
+import { authentication } from "../firebase";
 
 export class Maintextarea1 extends Component {
   state = {
@@ -15,19 +16,20 @@ export class Maintextarea1 extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.index != nextProps.index &&
+      this.props.index !== nextProps.index &&
       this.props.info[nextProps.index]
     ) {
       this.setState({
-        textarea: this.props.info[nextProps.index].information
+        textarea: this.props.info[nextProps.index].Information
       });
     }
-    // console.log("chal gya");
   }
 
   componentDidMount = () => {
-    // console.log("Chala");
-    this.setState({ textarea: this.props.info[this.props.index].information });
+    if (this.props.info[this.props.index] !== undefined)
+      this.setState({
+        textarea: this.props.info[this.props.index].Information
+      });
   };
 
   handleModal = () => {
@@ -47,40 +49,25 @@ export class Maintextarea1 extends Component {
   };
 
   saveAllData = () => {
+    let id = localStorage.getItem("Userlogged").split("@")[0];
+    authentication.editDataInFirebase(
+      this.props.index,
+      this.state.textarea,
+      id
+    );
+
     const data = {
       index: this.props.index,
-      information: this.state.textarea
+      Information: this.state.textarea
     };
+
     store.dispatch({ type: "Edit_Data", payload: data });
-    this.setState({ snackbar: true });
-    let options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        index: this.props.index,
-        data: this.state.textarea,
-        email: localStorage.getItem("Userlogged")
-      })
-    };
-    fetch("http://localhost:8081/editlistitem", options)
-      .then(res => {
-        console.log("response==>", res);
-        return res.json();
-      })
-      .then(data => {
-        return data;
-      })
-      .catch(err => {
-        console.log("error in fetch call===>", err);
-      });
   };
 
   render() {
     let { snackbar, textarea, write } = this.state;
     let { index, info } = this.props;
+    // console.log("INdex and info are", index, info);
 
     return (
       <React.Fragment>
@@ -130,7 +117,7 @@ export class Maintextarea1 extends Component {
                 showPrintMargin={true}
                 showGutter={true}
                 highlightActiveLine={true}
-                value={`${info[index].information}`}
+                value={`${info[index].Information}`}
                 setOptions={{
                   enableBasicAutocompletion: false,
                   enableLiveAutocompletion: false,

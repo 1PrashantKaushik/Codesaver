@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import code from "../../images/code.png";
-import code1 from "../../images/code-Icon_web_RGB-Black.svg";
 import { Link } from "react-router-dom";
-import { registerapi } from "../../utils";
+// import { registerapi } from "../../utils";
 import auth from "../../Validation";
+import { authentication } from "../../firebase";
 
 export class Register extends Component {
   state = {
@@ -29,44 +29,19 @@ export class Register extends Component {
 
   sendData = () => {
     let { errors, isValid } = { ...auth.validateSignup(this.state) };
-    let { name, email, password, phone } = this.state;
+    let { email, password } = this.state;
+    let { history } = this.props;
     this.setState({ errors, isValid }, () => {
       if (!isValid) {
         console.log("Errors in Fetch Call", errors);
       } else {
-        const registerdata = {
-          name: name,
-          email: email,
-          password: password,
-          phone: phone,
-          mycodes: []
-        };
-
-        let options = {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(registerdata)
-        };
-
-        return fetch("http://localhost:8081/register", options)
-          .then(res => {
-            // console.log("response==>", res);
-            return res.json();
+        authentication
+          .doCreateUserWithEmailAndPassword(email, password)
+          .then(authUser => {
+            history.push("/");
           })
-          .then(data => {
-            // console.log("data return in then react---->", data);
-            let { errors, isExist } = { ...data };
-            this.setState({ errors });
-            if (!isExist) {
-              this.props.history.push("/");
-            }
-            return data;
-          })
-          .catch(err => {
-            console.log("error in fetch call===>", err);
+          .catch(errors => {
+            console.log("Error Comes", errors);
           });
       }
     });

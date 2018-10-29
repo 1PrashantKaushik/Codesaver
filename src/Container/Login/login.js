@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import code from "../../images/code.png";
 import { Link } from "react-router-dom";
 import auth from "../../Validation";
-import { userInfo } from "os";
+import { authentication } from "../../firebase";
 
 export class Login extends Component {
   state = {
@@ -29,47 +29,30 @@ export class Login extends Component {
     this.setState({ [e.target.name]: e.target.value, errors });
   };
 
-  sendData = () => {
+  sendData = e => {
     let { errors, isValid } = { ...auth.validateLogin(this.state) };
     let { email, password } = this.state;
+    const { history } = this.props;
     this.setState({ errors, isValid }, () => {
       if (!isValid) {
-        console.log("Errors in Fetch Call", errors);
+        console.log("Errors in Login Call", errors);
       } else {
-        const logindata = {
-          email: email,
-          password: password
-        };
-
-        let options = {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(logindata)
-        };
-
-        return fetch("http://localhost:8081/login", options)
-          .then(res => {
-            console.log("response==>", res);
-            return res.json();
+        authentication
+          .doSignInWithEmailAndPassword(email, password)
+          .then(() => {
+            localStorage.setItem("Userlogged", email);
           })
-          .then(data => {
-            console.log("Login react---->", data);
-            let { errors, isExist } = { ...data };
+          .then(() => {
+            history.push("/App");
+          })
+          .catch(error => {
+            let errors = error;
             this.setState({ errors });
-            if (isExist) {
-              localStorage.setItem("Userlogged", email);
-              this.props.history.push("/App");
-            }
-            return data;
-          })
-          .catch(err => {
-            console.log("error in fetch call===>", err);
+            console.log("Error Comes from Login Api ", errors);
           });
       }
     });
+    e.preventDefault();
   };
 
   render() {
